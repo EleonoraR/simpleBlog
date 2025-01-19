@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Simple Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        header {
+            background: #35424a;
+            color: #ffffff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #e8491d 3px solid;
+        }
+        header h1 {
+            margin: 0;
+            text-align: center;
+        }
+        .blog-post {
+            background: #fff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .blog-post h2 {
+            margin-top: 0;
+            color: #35424a;
+        }
+        .post-form {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .post-form input[type="text"], 
+        .post-form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .post-form button {
+            background: #35424a;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .post-form button:hover {
+            background: #e8491d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>My Simple Blog</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="post-form">
+            <h2>Add New Post</h2>
+            <form id="blogForm">
+                <input type="text" id="postTitle" placeholder="Enter post title" required>
+                <textarea id="postContent" placeholder="Enter post content" required></textarea>
+                <button type="submit">Add Post</button>
+            </form>
+        </div>
+
+        <div id="blogPosts">
+            <!-- Blog posts will be added here -->
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('blogForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let title = document.getElementById('postTitle').value;
+            let content = document.getElementById('postContent').value;
+            
+            addNewPost(title, content);
+            
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postContent').value = '';
+        });
+
+        function addNewPost(title, content) {
+            let postContainer = document.getElementById('blogPosts');
+            let newPost = document.createElement('div');
+            newPost.classList.add('blog-post');
+            
+            let date = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            newPost.innerHTML = `
+                <h2>${title}</h2>
+                <p><small>Published on ${date}</small></p>
+                <p>${content}</p>
+            `;
+            
+            postContainer.insertBefore(newPost, postContainer.firstChild);
+        }
+
+        // Add some initial posts
+        addNewPost('Welcome to My Blog', 'This is my first blog post. I\'m excited to share my thoughts with you!');
+        addNewPost('The Joy of Coding', 'Coding is not just about writing lines of code, it\'s about solving problems and creating something new.');
+    </script>
+</body>
+</html>
